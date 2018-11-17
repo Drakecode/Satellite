@@ -1,0 +1,8 @@
+La classe Satellite définit la liste des leds, aiguilles, zones et balises en dur à partir de config.h. Comme tous ces objets utilisent une pin et ont besoin de fonctions communes, ce sont des classes Led, Aiguille, Balise et Zone qui dérivent d'une classe de base 'Objet' . Cette classe virtuelle pure oblige les dérivées à définir begin() et loop(), ainsi que les fonctions de sauvegarde et restauration de config en EEPROM.
+
+Cette classe Satellite déclare une liste globale des objets dans un objet*[], une liste de pointeurs qui permet ensuite de factoriser les comportements, comme dans le loop() du Satellite.
+
+L'instance de Satellite dispose de trois octets qui représentent l'état courant demandé par le gestionnaire. Ces trois octets sont mis à jour régulièrement par la lecture CAN. Le loop() du Satellite lance à tour de rôle le loop de chaque objet, celui-ci compare son état avec celui demandé et fait le nécessaire pour se conformer à la demande. 
+Les objets interrogeant une pin (balise et zone) mettent à jour leur état propre. La partie CAN n'a plus qu'à lire l'état si elle veut envoyer des messages à ce sujet.
+
+Il reste beaucoup de choses à faire. La bibliothèque CommandInterpreter de Jean-Luc sera utilisée pour la saisie de commandes sur le port série pour configurer chaque objet depuis l'IDE. C'est encore une bibliothèque de Jean-Luc, SlowMotionServo, qui sera utilisée pour le pilotage du servo, et c'est aussi une bibliothèque de Jean-Luc, LightDimmer, pour le dimming !
