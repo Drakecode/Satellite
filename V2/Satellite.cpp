@@ -147,16 +147,10 @@ void Satellite::begin(uint8_t inId)
 
 void Satellite::loop()
 {
-  MESSAGETYPE IsMessage = this->Bus.messageRx(); // RxBuf : message de commande (1) ou configuration (2) ou rien (0)
+  MESSAGETYPE IsMessage = this->Bus.loop(); // RxBuf : message de commande (1) ou configuration (2) ou rien (0)
   
-	if (IsMessage == FONCTIONNEMENT)
-	{
-		this->MessageIn.receive(this->Bus.RxBuf); // recup dans mData[] et synchronisation sur les réceptions periodiques
-		this->Bus.messageTx();                    // des emissions periodiques concernant les capteurs
-	} 
   if (IsMessage == CONFIG)
   {
-    this->ConfigMessage.receive(this->Bus.RxBuf); // recup dans cData[] 
     this->modeConfig = true;
     Serial.print(F("cfg "));Serial.println(this->modeConfig);
   }

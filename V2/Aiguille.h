@@ -22,7 +22,7 @@ public:
 	void begin(uint8_t inPin, uint8_t inNumber);
 	void loop(Satellite *inpSat);
 	static void loopPrioritaire() { SlowMotionServo::update(); }
-	void setButee(bool inSens);
+
 #ifdef DEBUG_MODE
 	void printObjet();
 #endif

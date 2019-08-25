@@ -44,8 +44,6 @@
 #include "CANBus.h"
 #include "CANMessage.h"
 
-#define LONGUEUR_ETAT	3
-
 #define NB_LEDS			9
 #define NB_AIGUILLES	1
 #define NB_DETECTEURS	3

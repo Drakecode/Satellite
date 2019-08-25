@@ -37,6 +37,7 @@ public:
 
 public:
 	void begin(uint8_t id); // init CAN
+	MESSAGETYPE loop();
 
   // envoi message détecteurs
   

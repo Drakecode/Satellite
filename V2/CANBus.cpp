@@ -133,3 +133,21 @@ MESSAGETYPE CANBus::messageRx()
 	return AUCUN;
 }
 #endif
+
+MESSAGETYPE CANBus::loop()
+{
+	MESSAGETYPE isMessage = this->messageRx(); // RxBuf : message de commande (1) ou configuration (2) ou rien (0)
+
+	if (isMessage == FONCTIONNEMENT)
+	{
+		this->MessageIn.receive(this->RxBuf); // recup dans mData[] et synchronisation sur les réceptions periodiques
+		this->messageTx();                    // des emissions periodiques concernant les capteurs
+	}
+	if (isMessage == CONFIG)
+	{
+		this->ConfigMessage.receive(this->RxBuf); // recup dans cData[] 
+	}
+
+	return isMessage;
+}
+
