@@ -71,9 +71,6 @@ private:
 
 public:
 	CANBus Bus;
-	CommandCANMessage MessageIn;
-	StatusCANMessage StatusMessage;
-  ConfigCANMessage ConfigMessage;
 	bool	modeConfig;
 
 	Satellite();

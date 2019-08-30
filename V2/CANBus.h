@@ -10,6 +10,8 @@
 #include "mcp_can.h"    // MCP2515 library
 #include "mcp_can_dfs.h"
 
+#include "CANMessage.h"
+
 const uint8_t CANInt = 2;               // interrupt from CAN on pin 2 (int 0)
 const uint8_t canCS = 10;               // 328P chip select for CAN
 
@@ -34,6 +36,10 @@ public:
 	unsigned long CanTxId;
 	unsigned char TxLen = 0;        // length of data, 1 octet de donnee
 	unsigned char TxBuf[8];         // buffer of data : status
+
+	CommandCANMessage MessageIn;
+	StatusCANMessage StatusMessage;
+	ConfigCANMessage ConfigMessage;
 
 public:
 	void begin(uint8_t id); // init CAN

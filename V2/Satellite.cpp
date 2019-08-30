@@ -175,7 +175,7 @@ void Satellite::loop()
 	// Si le dernier message reçu est une config permanente, sauve l'EEPROM.
 	// La sauvegarde EEPROM n'écrira pas les octets déjà à la bonne valeur,
 	// donc pas de danger d'écrire pour rien.
-	if (this->modeConfig && this->ConfigMessage.IsPermanentConfig())
+	if (this->modeConfig && this->Bus.ConfigMessage.IsPermanentConfig())
 	{
 		this->EEPROM_sauvegarde();
 		this->modeConfig = false;

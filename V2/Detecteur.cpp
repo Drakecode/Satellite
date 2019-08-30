@@ -52,13 +52,13 @@ void Detecteur::loop(Satellite *inpSat)
 	{
 		if (activ)
 		{
-			inpSat->StatusMessage.setDetection(inpSat->Bus.TxBuf, this->number, false);
+			inpSat->Bus.StatusMessage.setDetection(inpSat->Bus.TxBuf, this->number, false);
 			inpSat->Bus.messageTx();
 			Serial.println(F("Lib"));
 		}
 		else
 		{
-			inpSat->StatusMessage.setDetection(inpSat->Bus.TxBuf, this->number, true);
+			inpSat->Bus.StatusMessage.setDetection(inpSat->Bus.TxBuf, this->number, true);
 			inpSat->Bus.messageTx();
 			Serial.println(F("Occ"));
 		}

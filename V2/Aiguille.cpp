@@ -25,22 +25,22 @@ void Aiguille::begin(uint8_t inPin, uint8_t inNumber)
 
 void Aiguille::loop(Satellite *inpSat)
 {
-	if (inpSat->modeConfig && inpSat->ConfigMessage.IsConfig() && inpSat->ConfigMessage.AiguilleToConfig())
+	if (inpSat->modeConfig && inpSat->Bus.ConfigMessage.IsConfig() && inpSat->Bus.ConfigMessage.AiguilleToConfig())
 	{
-		uint8_t number = inpSat->ConfigMessage.NumAiguilleToConfig();
+		uint8_t number = inpSat->Bus.ConfigMessage.NumAiguilleToConfig();
 		if (number == this->number)	// Cette aiguille est bien celle à regler...
-			switch (inpSat->ConfigMessage.AiguilleConfigType())
+			switch (inpSat->Bus.ConfigMessage.AiguilleConfigType())
 			{
 			case AIGUILLE_CONFIG_TYPE::Min:
-				this->servoMoteur.setupMin(inpSat->ConfigMessage.ConfigIntValue());
+				this->servoMoteur.setupMin(inpSat->Bus.ConfigMessage.ConfigIntValue());
         this->servoMoteur.endSetup();
 				break;
 			case AIGUILLE_CONFIG_TYPE::Max:
-				this->servoMoteur.setupMax(inpSat->ConfigMessage.ConfigIntValue());
+				this->servoMoteur.setupMax(inpSat->Bus.ConfigMessage.ConfigIntValue());
 			  this->servoMoteur.endSetup();
 				break;
 			case AIGUILLE_CONFIG_TYPE::Speed:
-				this->servoMoteur.setSpeed(inpSat->ConfigMessage.ConfigFloatValue());
+				this->servoMoteur.setSpeed(inpSat->Bus.ConfigMessage.ConfigFloatValue());
 				this->estDroit = !this->estDroit;
 				this->servoMoteur.goTo(this->estDroit ? 0.0 : 1.0);
 				break;
@@ -49,7 +49,7 @@ void Aiguille::loop(Satellite *inpSat)
 	}
 
 	// Execution
-	bool inEstDroit = inpSat->MessageIn.pointState();
+	bool inEstDroit = inpSat->Bus.MessageIn.pointState();
 	if (inEstDroit == this->estDroit)
 		return; // pas de changement
   

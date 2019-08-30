@@ -25,14 +25,14 @@ void Led::begin(uint8_t inPin, uint8_t inNumber)
 
 void Led::loop(Satellite *inpSat)
 {
-	if (inpSat->modeConfig && inpSat->ConfigMessage.IsConfig() && inpSat->ConfigMessage.LedToConfig())
+	if (inpSat->modeConfig && inpSat->Bus.ConfigMessage.IsConfig() && inpSat->Bus.ConfigMessage.LedToConfig())
 	{
-		uint8_t number = inpSat->ConfigMessage.NumLedToConfig();
+		uint8_t number = inpSat->Bus.ConfigMessage.NumLedToConfig();
 		if (number == this->number)	// Cette led est bien celle a regler...
-			switch (inpSat->ConfigMessage.LedConfigType())
+			switch (inpSat->Bus.ConfigMessage.LedConfigType())
 			{
 			case LED_CONFIG_TYPE::Maximum:
-				this->dimmer.setMax(inpSat->ConfigMessage.ConfigByteValue());
+				this->dimmer.setMax(inpSat->Bus.ConfigMessage.ConfigByteValue());
 				this->dimmer.update();
 				this->dimmer.stopBlink();
 				this->dimmer.off();
@@ -40,33 +40,33 @@ void Led::loop(Satellite *inpSat)
 				break;
 
 			case LED_CONFIG_TYPE::BrighteningTime:
-				this->dimmer.setBrighteningTime(inpSat->ConfigMessage.ConfigIntValue());
+				this->dimmer.setBrighteningTime(inpSat->Bus.ConfigMessage.ConfigIntValue());
 				this->dimmer.stopBlink();
 				this->dimmer.off();
 				this->dimmer.on();
 				break;
 
 			case LED_CONFIG_TYPE::FadingTime:
-				this->dimmer.setFadingTime(inpSat->ConfigMessage.ConfigIntValue());
+				this->dimmer.setFadingTime(inpSat->Bus.ConfigMessage.ConfigIntValue());
 				this->dimmer.stopBlink();
 				this->dimmer.on();
 				this->dimmer.off();
 				break;
 
 			case LED_CONFIG_TYPE::OnTime:
-				this->dimmer.setOnTime(inpSat->ConfigMessage.ConfigIntValue());
+				this->dimmer.setOnTime(inpSat->Bus.ConfigMessage.ConfigIntValue());
 				this->dimmer.startBlink();
 				break;
 
 			case LED_CONFIG_TYPE::Period:
-				this->dimmer.setPeriod(inpSat->ConfigMessage.ConfigIntValue());
+				this->dimmer.setPeriod(inpSat->Bus.ConfigMessage.ConfigIntValue());
 				this->dimmer.startBlink();
 				break;
 			}
 		return;
 	}
 
-	uint8_t inNewState = inpSat->MessageIn.ledState(this->number);
+	uint8_t inNewState = inpSat->Bus.MessageIn.ledState(this->number);
 	switch (inNewState) {
 		case LED_BLINK:	this->dimmer.startBlink(); break;
 		case LED_ON:	this->dimmer.on(); break;
