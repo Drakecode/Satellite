@@ -9,6 +9,8 @@
 #ifndef __CAN_MESSAGE_H__
 #define __CAN_MESSAGE_H__
 
+#if defined(USE_CAN)
+
 #include <stdint.h>
 
 enum AIGUILLE_CONFIG_TYPE
@@ -86,5 +88,5 @@ public:
 
 };
 
+#endif
 #endif /* __CAN_MESSAGE_H__ */
-

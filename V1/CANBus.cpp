@@ -3,6 +3,8 @@
 /////////////////////////////////////////////////////////////////////////////
 //#include <Arduino.h>
 //#include <SPI.h>      //  SPI library
+#if defined(USE_CAN)
+
 #include "CANBus.h"
 #include "CANMessage.h"
 
@@ -124,3 +126,4 @@ bool CANBus::messageRx()
 }
 #endif
 
+#endif

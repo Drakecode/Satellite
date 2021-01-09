@@ -3,6 +3,8 @@
 #define __configMessage_H__
 //-------------------------------------------------------------------
 
+#if defined(USE_CAN)
+
 // gestion du bus (Can)
 
 #include "Arduino.h"
@@ -40,4 +42,4 @@ public:
 	byte messageRx();
 };
 #endif
-
+#endif

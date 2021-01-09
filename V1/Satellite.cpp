@@ -8,8 +8,10 @@
 #include "Detecteur.h"
 #include "Led.h"
 
+#if defined(USE_CAN)
 #include "CANBus.h"
 #include "CANMessage.h"
+#endif
 
 const uint8_t leds_pins[] = { 3, 4, 5, 6, 7, 8, 9, A0, A1 };
 const uint8_t aiguilles_pins[] = { A2 };
@@ -139,6 +141,7 @@ void Satellite::begin(uint8_t inId)
 
 void Satellite::loop()
 {
+#if defined(USE_CAN)  
   byte IsMessage = this->Bus.messageRx(); // RxBuf : message de commande (1) ou configuration (2) ou rien (0)
   
 	if (IsMessage == 1)
@@ -153,7 +156,7 @@ void Satellite::loop()
     this->modeConfig = true; //(this->ConfigMessage.IsConfig()) && !this->ConfigMessage.IsPermanentConfig());
     Serial.print("cfg ");Serial.println(this->modeConfig);
   }
- 
+ #endif
 
 	// traite les loop prioritaires
 	Aiguille::loopPrioritaire();
@@ -180,4 +183,3 @@ void Satellite::loop()
     Serial.print("cfg ");Serial.print(this->modeConfig);Serial.println(" Save");
 	}
 }
-

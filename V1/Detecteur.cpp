@@ -4,7 +4,10 @@
 #include "Satellite.h"
 #include "Objet.h"
 #include "Detecteur.h"
+
+#if defined(USE_CAN)
 #include "CANBus.h"
+#endif
 
 Detecteur::Detecteur()
 {
@@ -97,4 +100,3 @@ uint8_t Detecteur::EEPROM_chargement(int inAddr)
 
 	return addr;
 }
-

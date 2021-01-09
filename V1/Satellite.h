@@ -23,15 +23,32 @@
  * pin A6 (nu)
  * pin A7 (nu)
  */ 
+
+/* Affectation des pins 
+ *  ESP32 / NOdeMCU8266
+ * pin 0 = 
+ * ....
+ * pin 13 =
+ * pin A0 = 
+ */
+
+
  
 #ifndef _Satellite_H_
 #define _Satellite_H_
 
 #if !defined (__AVR_ATmega328P__)
+#if !defined (ARDUINO_ESP8266_NODEMCU) || !defined (ESP8266)
 #if !defined VISUALSTUDIO
-  #error CANNOT COMPILE - ONLY WORKS WITH AN ARDUINO UNO, NANO OR MINI
+  #error CANNOT COMPILE - ONLY WORKS WITH AN ARDUINO UNO, NANO OR MINI OR ESP32/8266
 #endif
 #endif
+#endif
+
+// Choix de la communication
+//#define USE_CAN
+#define USE_MQTT
+
 
 #include <Arduino.h>
 
@@ -41,8 +58,10 @@
 #include "Detecteur.h"
 #include "Led.h"
 
+#if defined(USE_CAN)
 #include "CANBus.h"
 #include "CANMessage.h"
+#endif
 
 #define NB_LEDS			9
 #define NB_AIGUILLES	1
@@ -68,10 +87,12 @@ private:
 	bool EEPROM_chargement();
 
 public:
+#if defined(USE_CAN)	
 	CANBus Bus;
 	CommandCANMessage MessageIn;
 	StatusCANMessage StatusMessage;
   ConfigCANMessage ConfigMessage;
+#endif
 	bool	modeConfig;
 
 	Satellite();
@@ -79,4 +100,3 @@ public:
 	void loop();
 };
 #endif
-
